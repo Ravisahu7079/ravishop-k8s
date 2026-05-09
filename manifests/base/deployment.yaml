@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ravishop-app
+  labels:
+    app: ravishop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ravishop
+  template:
+    metadata:
+      labels:
+        app: ravishop
+    spec:
+      containers:
+      - name: ravishop
+        image: docker.io/library/ravishop:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: SECRET_KEY
+          value: "ravishop-secret-key-2026"
+        - name: DATABASE_URL
+          value: "sqlite:////data/ravishop.db"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5
