@@ -10,6 +10,10 @@
 
  Kubernetes manifests and GitOps configuration for RaviShop using Argo CD.
 
+## 🏗️ Architecture Diagram
+
+![Architecture](RaviShop%20Diagram.drawio.png)
+
 ## 📁 Structure
 
     ravishop-k8s/
